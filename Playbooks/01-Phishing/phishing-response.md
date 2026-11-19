@@ -262,3 +262,60 @@ Reason: DKIM authentication passed and the signing domain aligned with the visib
 - Document evidence and determine appropriate escalation.
 
 **Important:** Successful SPF, DKIM and DMARC authentication does not guarantee that an email is legitimate or safe. Further investigation is required.
+
+## 10. Sender IP and Domain Reputation Analysis
+
+### 10.1 IP Address Investigation
+
+Investigate the sender IP address to identify potential malicious activity.
+
+**Tools:**
+- AbuseIPDB
+- VirusTotal
+
+**Information to collect:**
+- Abuse confidence score
+- Number of abuse reports
+- Last reported date
+- Reported abuse categories
+- Threat intelligence detections
+
+### 10.2 Domain Reputation Investigation
+
+Investigate the sender domain to identify potential phishing, spoofing and malicious activity.
+
+**Tools:**
+- VirusTotal
+- URLScan
+- WHOIS Lookup
+- MXToolbox
+
+**Information to collect:**
+- Domain reputation
+- Domain creation date
+- WHOIS registration information
+- DNS records
+- Historical malicious activity
+- SSL certificate information
+
+### 10.3 Investigation Findings
+
+**Scenario:** Suspicious domain impersonating Microsoft.
+
+**Observed indicators:**
+- Recently registered domain.
+- Malicious reputation detections.
+- Lookalike domain name.
+- Fake Microsoft 365 login page.
+
+**Analyst Conclusion:**
+
+The domain exhibits multiple indicators of phishing activity and should be classified as suspicious pending investigation.
+
+### 10.4 Investigation Precautions
+
+- Do not access suspicious websites directly from a normal workstation.
+- Use approved threat intelligence platforms.
+- Avoid submitting confidential organizational information to public platforms.
+- Correlate reputation findings with email headers and SIEM alerts.
+- Document evidence and escalate confirmed threats.
