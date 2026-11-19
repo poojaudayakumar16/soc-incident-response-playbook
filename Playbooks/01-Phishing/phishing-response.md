@@ -319,3 +319,55 @@ The domain exhibits multiple indicators of phishing activity and should be class
 - Avoid submitting confidential organizational information to public platforms.
 - Correlate reputation findings with email headers and SIEM alerts.
 - Document evidence and escalate confirmed threats.
+## 11. URL Investigation
+
+### 11.1 Objective
+
+Investigate suspicious URLs found in reported phishing emails to identify malicious websites, credential harvesting pages and suspicious redirects.
+
+### 11.2 Tools
+
+- VirusTotal – URL reputation analysis.
+- URLScan – Website and redirect analysis.
+- ANY.RUN – Controlled analysis of suspicious website behavior.
+
+### 11.3 Investigation Procedure
+
+1. Extract suspicious URLs from the reported email.
+2. Check URL reputation using VirusTotal.
+3. Review malicious and suspicious vendor detections.
+4. Analyze the URL using URLScan.
+5. Identify redirect chains and destination domains.
+6. Examine website content for fake login pages.
+7. Identify potential credential harvesting activity.
+8. Record investigation findings and evidence.
+
+### 11.4 Investigation Findings
+
+**Scenario:** A suspicious URL impersonating Microsoft 365.
+
+**Observed indicators:**
+- Multiple security vendors flagged the URL.
+- URLScan identified a suspicious redirect.
+- The destination displayed a fake Microsoft 365 login page.
+- The page requested employee credentials.
+
+**Finding:** Potential credential harvesting attack.
+
+### 11.5 Analyst Recommendations
+
+- Identify employees who received the phishing email.
+- Determine whether users clicked the malicious URL.
+- Verify whether credentials were submitted.
+- Review sign-in logs for suspicious authentication activity.
+- Escalate confirmed account compromises.
+- Block malicious URLs through approved security controls.
+- Preserve investigation evidence.
+
+### 11.6 Safety Precautions
+
+- Never click suspicious URLs directly.
+- Use approved threat intelligence platforms.
+- Do not submit confidential company URLs to public analysis platforms without authorization.
+- Use isolated environments for interactive analysis.
+- Document all findings for incident escalation.
