@@ -59,8 +59,6 @@ Severity should be determined based on the potential impact and investigation fi
 
 ## 7. Investigation and Response
 
-## 7. Investigation and Response
-
 ### 7.1 Alert Validation
 
 - Identify whether the email was reported as phishing or spam.
