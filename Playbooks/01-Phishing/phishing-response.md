@@ -369,3 +369,60 @@ Investigate suspicious URLs found in reported phishing emails to identify malici
 - Do not submit confidential company URLs to public analysis platforms without authorization.
 - Use isolated environments for interactive analysis.
 - Document all findings for incident escalation.
+
+## 12. QR Code Phishing (Quishing) Investigation
+
+### 12.1 Objective
+
+Identify and investigate malicious QR codes embedded in phishing emails that redirect users to fraudulent websites or credential harvesting pages.
+
+### 12.2 Tools
+
+- CyberChef – QR code decoding.
+- VirusTotal – URL reputation analysis.
+- URLScan – Website and redirect investigation.
+- ANY.RUN – Controlled website behaviour analysis.
+
+### 12.3 Investigation Procedure
+
+1. Collect the reported email.
+2. Extract the QR code image.
+3. Decode the QR code using an approved tool.
+4. Extract the embedded URL.
+5. Check URL reputation using VirusTotal.
+6. Investigate redirects and destination websites using URLScan.
+7. Identify fake login pages and credential harvesting attempts.
+8. Determine whether users scanned the QR code or submitted credentials.
+9. Document findings and escalate according to organizational procedures.
+
+### 12.4 Investigation Findings
+
+**Scenario:** A phishing email contains a QR code impersonating Microsoft 365.
+
+**Observed indicators:**
+- QR code redirects to a suspicious domain.
+- Multiple security vendors flag the URL.
+- Destination displays a fake Microsoft 365 login page.
+- One employee submitted credentials.
+
+**Finding:** QR-code-based credential harvesting attack.
+
+### 12.5 Recommended Response
+
+- Identify all affected employees.
+- Investigate users who scanned the QR code.
+- Determine whether credentials were submitted.
+- Reset compromised passwords.
+- Revoke active sessions and tokens where supported.
+- Review sign-in logs and MFA activity.
+- Quarantine phishing emails.
+- Block malicious URLs through approved security controls.
+- Monitor affected accounts for suspicious activity.
+
+### 12.6 Safety Precautions
+
+- Never scan suspicious QR codes using personal devices.
+- Decode QR codes using approved analysis tools.
+- Do not visit extracted URLs directly.
+- Avoid uploading confidential email content to public platforms without authorization.
+- Preserve evidence for incident investigation.
