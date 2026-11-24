@@ -61,49 +61,109 @@ Severity should be determined based on the potential impact and investigation fi
 
 ### 7.1 Alert Validation
 
+The objective is to validate the reported phishing email and determine whether further investigation is required.
+
+**Investigation steps:**
 - Identify whether the email was reported as phishing or spam.
 - Collect the reported email and user details.
+- Record the email subject, sender, recipient and received timestamp.
 - Check whether other employees received the same email.
-- Identify the email subject, sender and recipient.
+- Review available email security alerts.
+- Determine whether the email was delivered, quarantined or blocked.
 
 ### 7.2 Sender Investigation
 
+Examine the sender information to identify potential impersonation, spoofing and malicious domains.
+
+**Investigation steps:**
 - Examine the sender email address and domain.
-- Identify potential spoofing and typosquatting.
+- Compare the sender domain with the legitimate organization domain.
+- Identify potential typosquatting and brand impersonation.
 - Check domain reputation using threat intelligence platforms.
 - Review domain registration information where available.
+- Examine the Reply-To address for suspicious mismatches.
 
 ### 7.3 Email Header Investigation
 
+Analyze email headers to identify suspicious sender information, authentication results and email routing details.
+
+**Investigation steps:**
 - Examine From, Reply-To and Return-Path fields.
-- Identify the originating mail server and sending IP.
-- Review SPF, DKIM and DMARC authentication results.
-- Investigate suspicious email routing information.
+- Identify the sending IP address and email routing path.
+- Review Received headers.
+- Examine SPF, DKIM and DMARC authentication results.
+- Check for inconsistencies between sender information and authentication results.
+- Document suspicious header details.
 
 ### 7.4 URL Investigation
 
+Investigate URLs found in the reported email to identify malicious websites, redirects and credential harvesting pages.
+
+**Investigation steps:**
 - Extract URLs from the reported email.
 - Check URL reputation using VirusTotal and URLScan.
 - Examine redirects and destination domains.
+- Identify suspicious login pages and credential harvesting activity.
 - Use approved isolated analysis environments when required.
-- Never click suspicious URLs directly.
+- Never click suspicious URLs directly from a normal workstation.
 
 ### 7.5 Attachment Investigation
 
-- Identify attachment names, types and hashes.
+Investigate suspicious email attachments to identify potential malware.
+
+**Investigation steps:**
+- Identify attachment names, file extensions and sizes.
+- Calculate file hashes using approved tools.
 - Check file reputation using threat intelligence platforms.
 - Analyze suspicious files in an approved malware sandbox.
-- Inspect embedded URLs, QR codes and suspicious content.
-- Never download or execute suspicious attachments on a normal workstation.
+- Investigate suspicious process execution and network activity where endpoint evidence is available.
+- Never execute suspicious attachments on a normal workstation.
 
 ### 7.6 User Validation
 
-- Contact the user if additional business context is required.
-- Verify whether the communication was expected.
-- Determine whether the user clicked any links or opened attachments.
-- Check whether credentials were submitted.
+Contact the affected user to understand whether they interacted with the suspicious email.
 
-### 7.7 Incident Classification
+**Investigation steps:**
+- Verify whether the communication was expected.
+- Determine whether the user opened the email.
+- Check whether the user clicked any links or scanned QR codes.
+- Determine whether attachments were opened or executed.
+- Verify whether credentials or sensitive information were submitted.
+- Record the user's responses and relevant timestamps.
+
+### 7.7 Scope and Impact Assessment
+
+Determine how widely the phishing email has affected the organization.
+
+**Investigation steps:**
+- Identify all recipients of the phishing email.
+- Search mailboxes for matching sender addresses, subjects, URLs and attachment hashes.
+- Identify users who clicked links or opened attachments.
+- Identify users who submitted credentials.
+- Check whether any accounts or endpoints show signs of compromise.
+- Determine the potential business impact.
+
+### 7.8 SIEM Correlation and IOC Investigation
+
+Correlate the phishing indicators with available security logs and alerts.
+
+**Investigation steps:**
+- Search SIEM logs for the sender email address and domain.
+- Search for malicious URLs and associated IP addresses.
+- Check endpoint alerts for suspicious file execution.
+- Review authentication logs for unusual sign-in activity.
+- Correlate email, endpoint and identity security events.
+- Record relevant Indicators of Compromise (IOCs).
+
+**Examples of IOCs:**
+- Sender email address.
+- Malicious domain.
+- Suspicious URL.
+- Source IP address.
+- Attachment file hash.
+- Suspicious process name.
+
+### 7.9 Incident Classification and Escalation
 
 Based on the investigation findings, classify the email as:
 
@@ -112,7 +172,18 @@ Based on the investigation findings, classify the email as:
 - Legitimate Email
 - Suspicious / Inconclusive
 
-Document the investigation findings and escalate according to organizational procedures.
+**Escalation criteria:**
+
+Escalate the incident to the appropriate L2 analyst or incident response team when:
+
+- An employee has submitted credentials.
+- Malware execution is suspected or confirmed.
+- Unauthorized account access is identified.
+- Multiple employees are affected.
+- Sensitive information may have been exposed.
+- Further investigation requires elevated privileges or specialist support.
+
+Document the investigation findings, evidence, actions taken and escalation details according to organizational procedures.
 
 ## 8. Email Header Analysis
 
@@ -120,7 +191,18 @@ Document the investigation findings and escalate according to organizational pro
 
 Analyze email headers to identify suspicious sender information, authentication results, routing details and potential email spoofing.
 
-### 8.2 Important Email Header Fields
+### 8.2 Obtaining Email Headers
+
+Email headers contain technical information about the sender, recipient, authentication results and mail servers involved in delivering an email.
+
+**Investigation steps:**
+1. Obtain the original reported email using approved procedures.
+2. Access the message's original or full email headers.
+3. Preserve the original email for investigation.
+4. Use an approved email header analyzer if required.
+5. Review the header fields for suspicious information.
+
+### 8.3 Important Email Header Fields
 
 | Header Field | Investigation Purpose |
 |---|---|
@@ -129,12 +211,43 @@ Analyze email headers to identify suspicious sender information, authentication 
 | Reply-To | Identifies the reply destination |
 | Received | Shows the email routing path |
 | Authentication-Results | Contains SPF, DKIM and DMARC results |
+| Message-ID | Provides a unique identifier for the email message |
 
-### 8.3 Investigation Findings
+### 8.4 Header Investigation Procedure
+
+**Step 1 – Sender Validation**
+
+- Examine the From address.
+- Compare the sender domain with the expected organization domain.
+- Check for suspicious Reply-To and Return-Path mismatches.
+- Identify lookalike domains and possible typosquatting.
+
+**Step 2 – Email Routing Analysis**
+
+- Examine the Received headers.
+- Identify the mail servers involved in email delivery.
+- Review timestamps and routing information.
+- Investigate unexpected or suspicious routing patterns.
+
+**Step 3 – Authentication Analysis**
+
+- Review SPF authentication results.
+- Verify DKIM signature results.
+- Check DMARC authentication and domain alignment.
+- Investigate authentication failures and inconsistencies.
+
+**Step 4 – Evidence Collection**
+
+- Record the sender address and domain.
+- Capture relevant header information.
+- Record the Message-ID and timestamps.
+- Document authentication results and suspicious indicators.
+
+### 8.5 Investigation Findings
 
 **Scenario:** A suspicious email impersonating Microsoft Security Team.
 
-**Observed sender domain:** micr0soft-security.com
+**Observed sender domain:** `micr0soft-security.com`
 
 **Authentication Results:**
 - SPF: PASS
@@ -147,13 +260,24 @@ The sender domain uses the number zero (0) instead of the letter o in Microsoft.
 
 **Finding:** Potential typosquatting and brand impersonation.
 
-### 8.4 Analyst Conclusion
+### 8.6 Analyst Conclusion
 
 Despite successful SPF, DKIM and DMARC authentication, the sender domain appears suspicious.
 
-Authentication success does not guarantee sender legitimacy.
+Authentication success does not guarantee sender legitimacy. It only indicates that the relevant authentication checks passed for the domains involved.
+
+A malicious actor can register a lookalike domain and configure valid SPF, DKIM and DMARC records for that domain.
 
 Further investigation of domain registration, reputation, URLs and email content is required before final classification.
+
+### 8.7 Investigation Precautions
+
+- Preserve the original email and its headers.
+- Do not rely on the displayed From address alone.
+- Interpret Received headers carefully, as header information can be forged outside trusted mail infrastructure.
+- Do not assume an SPF, DKIM or DMARC failure automatically proves malicious activity.
+- Correlate header findings with other investigation evidence.
+- Document findings and escalate according to organizational procedures.
 
 ## 9. Email Authentication Analysis – SPF, DKIM and DMARC
 
@@ -317,6 +441,64 @@ The domain exhibits multiple indicators of phishing activity and should be class
 - Avoid submitting confidential organizational information to public platforms.
 - Correlate reputation findings with email headers and SIEM alerts.
 - Document evidence and escalate confirmed threats.
+
+### 10.5 IP Reputation Correlation and Investigation
+
+Threat intelligence reputation results should be correlated with internal security logs before classifying an IP address as malicious.
+
+**Investigation steps:**
+
+1. Check the IP address reputation using AbuseIPDB and VirusTotal.
+2. Review abuse confidence scores, vendor detections and report timestamps.
+3. Identify whether the IP is associated with suspicious infrastructure or shared services.
+4. Correlate the IP address with firewall, proxy and network logs.
+5. Identify connection attempts to internal servers.
+6. Determine whether the connections were allowed, denied or successfully established.
+7. Investigate targeted ports, services and connection timestamps.
+8. Correlate findings with endpoint and authentication logs.
+9. Document the investigation findings and escalate confirmed malicious activity.
+
+**Important investigation considerations:**
+
+- A high reputation score does not independently confirm malicious activity.
+- A 0% abuse confidence score does not guarantee that an IP address is safe.
+- Denied firewall connections do not establish that internal systems were compromised.
+- Allowed connections do not automatically indicate successful compromise.
+- Correlate multiple security data sources before making a final determination.
+
+**Analyst Conclusion:**
+
+Classify and respond to suspicious IP addresses based on threat intelligence, internal log evidence and the overall investigation context.
+
+**### 10.6 Domain Reputation Investigation
+
+Investigate suspicious domains identified in phishing emails to detect potential typosquatting, brand impersonation and credential harvesting websites.
+
+**Investigation steps:**
+
+1. Identify the suspicious domain from the reported email.
+2. Check domain reputation using VirusTotal.
+3. Review domain registration date and registrar information using WHOIS lookup.
+4. Examine DNS records, including A, MX, NS and TXT records.
+5. Review SSL certificate information and validity.
+6. Investigate website content and redirects using URLScan.
+7. Identify fake login pages and potential credential harvesting activity.
+8. Search email security logs to identify other messages containing the domain.
+9. Determine whether employees accessed the website or submitted credentials.
+10. Document findings and escalate confirmed malicious activity.
+
+**Important investigation considerations:**
+
+- Newly registered domains may require additional scrutiny.
+- Privacy-protected WHOIS information does not automatically indicate malicious activity.
+- A valid SSL certificate does not guarantee that a website is legitimate.
+- Correlate domain reputation, website behaviour and email evidence before classification.
+
+**Analyst Conclusion:**
+
+Classify suspicious domains based on multiple investigation findings. If malicious activity is confirmed, coordinate blocking through approved security controls and investigate potentially affected users.**
+
+
 ## 11. URL Investigation
 
 ### 11.1 Objective
