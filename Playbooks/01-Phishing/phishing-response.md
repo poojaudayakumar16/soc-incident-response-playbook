@@ -426,3 +426,241 @@ Identify and investigate malicious QR codes embedded in phishing emails that red
 - Do not visit extracted URLs directly.
 - Avoid uploading confidential email content to public platforms without authorization.
 - Preserve evidence for incident investigation.
+
+# Section 13 – Attachment and Malware Analysis
+
+## 13.1 Introduction
+
+Phishing emails may contain malicious attachments designed to infect systems, steal information or execute unauthorized commands.
+
+Common suspicious attachments include:
+
+- `.exe` – Executable files
+- `.js` – JavaScript files
+- `.vbs` – VBScript files
+- `.bat` – Batch files
+- `.ps1` – PowerShell scripts
+- `.docm` – Macro-enabled Word documents
+- `.xlsm` – Macro-enabled Excel documents
+- `.iso` – Disk image files
+- `.zip` – Compressed archives that may contain malicious files
+
+**Example:** An employee receives an unexpected email containing `Invoice_2026.xlsm`.
+
+A SOC Analyst should investigate the attachment safely before determining whether it is malicious.
+
+## 13.2 Initial Attachment Investigation
+
+When an employee reports a suspicious attachment:
+
+1. Collect the attachment using approved procedures.
+2. Record the file name, extension, size and source email.
+3. Do not open the attachment on a normal workstation.
+4. Do not enable macros or execute suspicious files.
+5. Preserve the original attachment as evidence.
+6. Follow the organization's evidence-handling procedures.
+
+**Important:** Never execute suspicious attachments directly on your personal or corporate workstation.
+
+## 13.3 File Hash Analysis
+
+A file hash is a unique-looking digital fingerprint generated from the contents of a file.
+
+Common hashing algorithms:
+
+- MD5
+- SHA-1
+- SHA-256
+
+SHA-256 is commonly used for malware identification and threat intelligence.
+
+**Why do SOC Analysts calculate file hashes?**
+
+- To identify known malicious files.
+- To search for previously reported malware.
+- To compare files across different security tools.
+- To share Indicators of Compromise (IOCs) with security teams.
+
+**Important points:**
+
+- A hash lookup does not execute the file.
+- If the file changes, its hash will generally change.
+- An unknown hash does not automatically mean the file is safe.
+- A hash reputation result should be considered alongside other evidence.
+
+## 13.4 Malware Reputation Analysis
+
+SOC Analysts can use the following tools to investigate suspicious files.
+
+| Tool | Purpose |
+|---|---|
+| VirusTotal | Checks file hashes and files against multiple security engines |
+| ANY.RUN | Interactive malware sandbox analysis |
+| Hybrid Analysis | Automated malware analysis and behavioural reports |
+| CyberChef | Performs hashing, decoding and data transformations |
+| Microsoft Defender for Endpoint | Investigates endpoint alerts, processes and suspicious activity |
+
+**VirusTotal:** Useful for checking whether a file hash has previously been identified as malicious.
+
+**ANY.RUN:** Allows analysts to observe suspicious file behaviour in a controlled environment.
+
+**Hybrid Analysis:** Provides information about file behaviour, processes and network activity.
+
+**Caution:** Do not upload confidential company files to public analysis platforms unless organizational policy explicitly permits it.
+
+## 13.5 Process Tree Investigation
+
+A process tree shows the relationship between processes running on a system.
+
+Example:
+
+    EXCEL.EXE
+        └── powershell.exe
+                └── suspicious.exe
+
+This process chain is suspicious because Excel launches PowerShell, which then executes an unknown file.
+
+A SOC Analyst should investigate:
+
+- Parent and child processes.
+- Process command-line arguments.
+- File paths.
+- File hashes.
+- Network connections.
+- Execution timestamps.
+- Related endpoint alerts.
+
+**Important:** PowerShell is a legitimate Windows administration tool. However, attackers may abuse it to download malware, execute scripts, collect information or communicate with command-and-control infrastructure.
+
+A suspicious process chain is an indicator for further investigation, not automatic proof of malware.
+
+## 13.6 Malware Investigation Scenario
+
+**Scenario:**
+
+An employee receives an email containing `Invoice_2026.xlsm`.
+
+During investigation:
+
+- 12 antivirus engines identify the file as a Trojan.
+- The file launches PowerShell.
+- PowerShell executes `suspicious.exe` from the Downloads folder.
+
+**SOC Analyst investigation:**
+
+1. Collect and calculate the file's SHA-256 hash.
+2. Check the hash reputation using VirusTotal.
+3. Investigate the file in an approved sandbox.
+4. Review the endpoint process tree.
+5. Examine PowerShell command-line activity.
+6. Check network connections and related security alerts.
+7. Determine whether the file was executed and whether the endpoint was compromised.
+8. Escalate the incident and initiate containment according to the organization's procedures.
+
+## 13.7 Indicators of Compromise (IOCs)
+
+During attachment investigation, collect relevant IOCs:
+
+- File name.
+- File hash (SHA-256).
+- Malicious domain.
+- IP address.
+- Suspicious URL.
+- Process name.
+- File path.
+- Command-line arguments.
+
+These indicators can help identify other affected systems and support threat hunting.
+
+## 13.8 Key Takeaways
+
+- Never open suspicious attachments directly on a normal workstation.
+- Calculate file hashes before investigating file reputation.
+- Use approved sandbox environments for behavioural analysis.
+- Investigate suspicious parent-child process relationships.
+- PowerShell is legitimate but can be abused by attackers.
+- An unknown hash does not mean a file is safe.
+- Preserve evidence and follow organizational procedures.
+- Correlate multiple indicators before declaring a file malicious.
+
+## 13.9 Tools Used
+
+- VirusTotal
+- ANY.RUN
+- Hybrid Analysis
+- CyberChef
+- Microsoft Defender for Endpoint
+
+**Objective:** Safely investigate suspicious email attachments, identify potential malware, understand malicious execution behaviour and collect evidence for incident response.
+
+## 14. Containment, Eradication, Recovery and Incident Closure
+
+### 14.1 Containment
+
+Containment aims to limit the impact of the phishing attack and prevent further unauthorized access.
+
+**Actions:**
+- Reset the compromised user's password.
+- Revoke active sessions and refresh tokens where supported.
+- Temporarily disable or restrict the compromised account if required.
+- Investigate suspicious sign-in activity.
+- Review MFA settings and identify unauthorized changes.
+
+### 14.2 Eradication
+
+The objective of eradication is to remove the phishing threat from the organization's environment.
+
+**Actions:**
+- Coordinate with the email security team to block confirmed malicious senders, domains and URLs.
+- Search for and quarantine or purge phishing emails from affected mailboxes.
+- Identify other employees who received or interacted with the phishing email.
+- Investigate suspicious attachments and related indicators of compromise.
+- Check for suspicious mailbox rules, forwarding configurations and unauthorized access.
+
+### 14.3 Recovery
+
+Before restoring the affected account, verify that it is secure.
+
+**Actions:**
+- Confirm that the password has been reset.
+- Verify MFA configuration.
+- Review sign-in logs and investigate suspicious authentication attempts.
+- Remove unauthorized mailbox rules and forwarding configurations.
+- Restore account access through the organization's approved recovery process.
+- Monitor account activity for further suspicious behaviour.
+
+### 14.4 Post-Incident Monitoring
+
+Continue monitoring the affected account and related indicators for signs of further compromise.
+
+**Monitoring activities:**
+- Review sign-in logs for unfamiliar IP addresses, locations and devices.
+- Monitor suspicious authentication attempts.
+- Check for additional phishing emails from related senders or domains.
+- Monitor unusual mailbox activity and outbound emails.
+- Escalate any recurring suspicious activity.
+
+### 14.5 Incident Closure and Documentation
+
+Prepare an incident closure report containing:
+
+- Incident summary and detection method.
+- Incident timeline.
+- Affected users and systems.
+- Investigation findings and evidence.
+- Indicators of compromise (IOCs), including malicious URLs, domains, IP addresses and file hashes where relevant.
+- Containment, eradication and recovery actions.
+- Root cause and business impact.
+- Final incident status and recommendations.
+
+### 14.6 Preventive Recommendations
+
+To reduce the likelihood of similar phishing incidents:
+
+- Conduct regular employee security awareness webinars.
+- Run authorized phishing simulation campaigns.
+- Encourage employees to report suspicious emails.
+- Enforce MFA and phishing-resistant authentication where possible.
+- Strengthen email security using SPF, DKIM and DMARC.
+- Review email filtering and URL protection policies regularly.
+
