@@ -470,7 +470,7 @@ Threat intelligence reputation results should be correlated with internal securi
 
 Classify and respond to suspicious IP addresses based on threat intelligence, internal log evidence and the overall investigation context.
 
-**### 10.6 Domain Reputation Investigation
+### 10.6 Domain Reputation Investigation
 
 Investigate suspicious domains identified in phishing emails to detect potential typosquatting, brand impersonation and credential harvesting websites.
 
@@ -636,9 +636,9 @@ After identifying a malicious QR code, determine whether employees scanned it, a
 
 **Important:** Scanning a QR code or visiting a phishing website does not automatically mean credentials were compromised. Determine whether credentials were submitted or other malicious activity occurred before deciding on account recovery actions.
 
-# Section 13 – Attachment and Malware Analysis
+## 13. Attachment and Malware Analysis
 
-## 13.1 Introduction
+### 13.1 Introduction
 
 Phishing emails may contain malicious attachments designed to infect systems, steal information or execute unauthorized commands.
 
@@ -658,7 +658,7 @@ Common suspicious attachments include:
 
 A SOC Analyst should investigate the attachment safely before determining whether it is malicious.
 
-## 13.2 Initial Attachment Investigation
+### 13.2 Initial Attachment Investigation
 
 When an employee reports a suspicious attachment:
 
@@ -671,7 +671,7 @@ When an employee reports a suspicious attachment:
 
 **Important:** Never execute suspicious attachments directly on your personal or corporate workstation.
 
-## 13.3 File Hash Analysis
+### 13.3 File Hash Analysis
 
 A file hash is a unique-looking digital fingerprint generated from the contents of a file.
 
@@ -697,7 +697,7 @@ SHA-256 is commonly used for malware identification and threat intelligence.
 - An unknown hash does not automatically mean the file is safe.
 - A hash reputation result should be considered alongside other evidence.
 
-## 13.4 Malware Reputation Analysis
+### 13.4 Malware Reputation Analysis
 
 SOC Analysts can use the following tools to investigate suspicious files.
 
@@ -717,7 +717,7 @@ SOC Analysts can use the following tools to investigate suspicious files.
 
 **Caution:** Do not upload confidential company files to public analysis platforms unless organizational policy explicitly permits it.
 
-## 13.5 Process Tree Investigation
+### 13.5 Process Tree Investigation
 
 A process tree shows the relationship between processes running on a system.
 
@@ -743,7 +743,7 @@ A SOC Analyst should investigate:
 
 A suspicious process chain is an indicator for further investigation, not automatic proof of malware.
 
-## 13.6 Malware Investigation Scenario
+### 13.6 Malware Investigation Scenario
 
 **Scenario:**
 
@@ -766,7 +766,7 @@ During investigation:
 7. Determine whether the file was executed and whether the endpoint was compromised.
 8. Escalate the incident and initiate containment according to the organization's procedures.
 
-## 13.7 Indicators of Compromise (IOCs)
+### 13.7 Indicators of Compromise (IOCs)
 
 During attachment investigation, collect relevant IOCs:
 
@@ -781,7 +781,7 @@ During attachment investigation, collect relevant IOCs:
 
 These indicators can help identify other affected systems and support threat hunting.
 
-## 13.8 Key Takeaways
+### 13.8 Key Takeaways
 
 - Never open suspicious attachments directly on a normal workstation.
 - Calculate file hashes before investigating file reputation.
@@ -792,7 +792,7 @@ These indicators can help identify other affected systems and support threat hun
 - Preserve evidence and follow organizational procedures.
 - Correlate multiple indicators before declaring a file malicious.
 
-## 13.9 Tools Used
+### 13.9 Tools Used
 
 - VirusTotal
 - ANY.RUN
