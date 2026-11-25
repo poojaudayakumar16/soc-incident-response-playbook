@@ -609,6 +609,33 @@ Identify and investigate malicious QR codes embedded in phishing emails that red
 - Avoid uploading confidential email content to public platforms without authorization.
 - Preserve evidence for incident investigation.
 
+### 12.7 User Interaction and Impact Assessment
+
+After identifying a malicious QR code, determine whether employees scanned it, accessed the extracted URL or submitted credentials.
+
+**Investigation steps:**
+
+1. Identify all employees who received the phishing email.
+2. Review available email, proxy and web security logs.
+3. Identify users who accessed the extracted URL.
+4. Determine whether users submitted credentials on the destination website.
+5. Review endpoint logs for suspicious downloads or browser activity.
+6. Investigate authentication logs for unusual sign-in attempts.
+7. Identify potentially compromised accounts and endpoints.
+8. Document affected users, timestamps and investigation findings.
+
+**Recommended Response:**
+
+- Immediately reset passwords for users who submitted credentials.
+- Revoke active sessions and refresh tokens where supported.
+- Review MFA settings and suspicious mailbox activity.
+- Investigate endpoint activity for users who visited the malicious website.
+- Quarantine or purge phishing emails from affected mailboxes.
+- Block confirmed malicious URLs and domains through approved security controls.
+- Monitor affected accounts and endpoints for further suspicious activity.
+
+**Important:** Scanning a QR code or visiting a phishing website does not automatically mean credentials were compromised. Determine whether credentials were submitted or other malicious activity occurred before deciding on account recovery actions.
+
 # Section 13 – Attachment and Malware Analysis
 
 ## 13.1 Introduction
@@ -845,4 +872,151 @@ To reduce the likelihood of similar phishing incidents:
 - Enforce MFA and phishing-resistant authentication where possible.
 - Strengthen email security using SPF, DKIM and DMARC.
 - Review email filtering and URL protection policies regularly.
+
+## 15. Evidence Collection and Preservation
+
+### 15.1 Objective
+
+Collect, preserve and document relevant evidence during phishing investigations to support incident analysis, escalation and future reference.
+
+### 15.2 Evidence Collection
+
+**Email Evidence:**
+- Original reported email.
+- Sender and recipient addresses.
+- Email subject and timestamp.
+- Full email headers.
+- Message-ID.
+
+**Threat Indicators:**
+- Malicious URLs and domains.
+- Source IP addresses.
+- Suspicious attachment names.
+- SHA-256 file hashes.
+- Suspicious process names and command-line arguments.
+
+**Security Logs:**
+- Email security gateway logs.
+- Firewall and network logs.
+- Web proxy logs.
+- Endpoint detection alerts.
+- Authentication and sign-in logs.
+
+**User Information:**
+- Affected employee details.
+- User confirmation.
+- Whether the user clicked a link or scanned a QR code.
+- Whether credentials were submitted.
+- Relevant interaction timestamps.
+
+### 15.3 Evidence Integrity
+
+- Preserve original evidence using approved procedures.
+- Calculate SHA-256 hashes for suspicious files.
+- Record filenames, file sizes and collection timestamps.
+- Verify file hashes before and after transferring evidence.
+- Investigate and document any hash mismatches.
+- Store evidence in approved secure locations.
+
+### 15.4 Chain of Custody
+
+Maintain a record of evidence collection, access, transfer and storage.
+
+Document:
+- Evidence description.
+- Collection date and time.
+- Name of the collecting analyst.
+- Original evidence source.
+- File hash, where applicable.
+- Transfer details and receiving analyst.
+- Any changes or handling performed.
+
+### 15.5 Evidence Documentation
+
+Maintain an accurate incident timeline and document:
+- Investigation findings.
+- Evidence collected.
+- Security tools used.
+- Actions performed.
+- Analyst observations.
+- Escalation details.
+
+**Important:** Preserve evidence according to organizational retention, privacy and evidence-handling policies. Do not modify original evidence unnecessarily.
+
+## 16. Incident Escalation and Reporting
+
+### 16.1 Objective
+
+Establish a structured escalation and reporting process to ensure phishing incidents are communicated to the appropriate security teams for further investigation and response.
+
+### 16.2 Escalation Criteria
+
+An L1 SOC Analyst should escalate an incident when:
+
+- Employees have submitted credentials on a phishing website.
+- Unauthorized account access is identified.
+- Malware execution is suspected or confirmed.
+- Multiple employees are affected by the same phishing campaign.
+- Sensitive or confidential information may have been exposed.
+- Suspicious endpoint or network activity requires further investigation.
+- Additional privileges or specialist support are required.
+
+### 16.3 Incident Severity and Escalation
+
+| Severity | Example | Recommended escalation |
+|---|---|---|
+| Critical | Confirmed widespread compromise or significant business impact | Immediate escalation to Incident Response team |
+| High | Credential compromise or suspected malware execution | L2 SOC / Incident Response team |
+| Medium | Malicious email delivered with no confirmed interaction | L2 SOC according to organizational procedures |
+| Low | Suspicious email with no confirmed malicious activity | L1 investigation and monitoring |
+
+Final severity and escalation decisions must follow organizational policies.
+
+### 16.4 Information Required for Escalation
+
+The L1 analyst should provide:
+
+- Incident ID and summary.
+- Detection date and time.
+- Incident severity.
+- Affected users and endpoints.
+- Sender email address and domain.
+- Malicious URLs and IP addresses.
+- Attachment details and SHA-256 hashes.
+- Email headers and relevant security logs.
+- User interaction details.
+- Investigation findings and IOCs.
+- Containment actions already performed.
+- Outstanding investigation requirements.
+
+### 16.5 Incident Handover
+
+During escalation:
+
+1. Create or update the incident ticket.
+2. Attach relevant investigation evidence.
+3. Document the incident timeline.
+4. Summarize completed investigation steps.
+5. Highlight potential business impact.
+6. Record containment actions already performed.
+7. Clearly identify outstanding tasks.
+8. Assign the incident to the appropriate team.
+9. Follow up according to organizational escalation procedures.
+
+### 16.6 Incident Reporting
+
+Prepare an incident report containing:
+
+- Incident overview.
+- Detection and investigation details.
+- Root cause, where established.
+- Affected users and systems.
+- Indicators of Compromise.
+- Impact assessment.
+- Containment and recovery actions.
+- Escalation and handover details.
+- Final investigation outcome.
+- Preventive recommendations.
+
+**Important:** L1 analysts should document factual findings separately from assumptions and escalate incidents according to organizational procedures and SLA requirements.
 
